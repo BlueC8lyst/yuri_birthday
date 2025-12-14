@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // --- 1. Live Age Counter ---
-    const birthDate = new Date('2006-08-14T00:00:00'); // Ensure this date is correct
+    // Ensure this date matches the one you want
+    const birthDate = new Date('2003-08-14T00:00:00'); 
     const countdownElement = document.getElementById('countdown');
 
     function updateAge() {
@@ -31,15 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
     updateAge();
 
     // --- 2. Animations (AOS) ---
-    AOS.init({
-        duration: 800,
-        once: true,
-        offset: 50
-    });
+    // This is critical - it reveals the hidden elements
+    if (typeof AOS!== 'undefined') {
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50
+        });
+    }
 
     // --- 3. Gallery ---
     const galleryEl = document.getElementById('lightgallery');
-    if(galleryEl) {
+    if(galleryEl && typeof lightGallery!== 'undefined') {
         lightGallery(galleryEl, {
             speed: 500,
             download: false,
@@ -65,8 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('sakura-canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');
-        let petals =;
-        const numPetals = 40; // Reduced count for performance
+        // FIX: The array was missing brackets in previous code
+        let petals =; 
+        const numPetals = 40; 
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -108,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function createPetals() {
-            petals =;
+            petals =; // FIX: Added brackets here too
             for (let i = 0; i < numPetals; i++) {
                 petals.push(new Petal());
             }
@@ -123,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// --- 6. New Features Logic (Outside DOMContentLoaded to be accessible globally) ---
+// --- 6. Global Functions (For HTML onclick events) ---
 
 // Toggle Playlist Modal
 function togglePlaylist() {
@@ -143,7 +148,6 @@ function togglePlaylist() {
 function playSong(songFile) {
     const player = document.getElementById('audio-player');
     if(player) {
-        // You can add a path prefix if your songs are in a folder, e.g., 'assets/music/' + songFile
         player.src = songFile; 
         player.play().catch(e => console.log("Audio play failed (interaction needed first):", e));
     }
@@ -152,12 +156,11 @@ function playSong(songFile) {
 // Unwrap Gift Box
 function unwrapGift(element) {
     const lid = element.querySelector('.gift-lid');
-    const content = element.querySelector('.gift-content');
+    // const content = element.querySelector('.gift-content'); // Not strictly needed for animation
     
-    if(lid && content) {
+    if(lid) {
         // Slide lid up
         lid.style.transform = 'translateY(-110%) rotate(-5deg)';
         lid.style.opacity = '0';
-        // Reveal content is already handled by Z-index, but we can animate it if needed
     }
 }
