@@ -74,7 +74,7 @@ body {
 .gift-content {
     /* Ensures content is hidden inside until lid lifts */
     transform: translateZ(-1px); 
-    background: radial-gradient(circle, #fff 0%, #f0f8ff 100%);
+    background: radial-gradient(circle, #fff 20%, #fff0f5 80%);
 }
 
 /* --- 5. ANIMATION KEYFRAMES --- */
