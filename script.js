@@ -142,23 +142,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function togglePlaylist() {
     const modal = document.getElementById('playlist-modal');
-    if(modal) {
-        if(modal.classList.contains('hidden')) {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        } else {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-    }
+    if (!modal) return;
+
+    modal.classList.toggle('hidden');
+    modal.classList.toggle('flex');
 }
+
+let currentSong = null;
 
 function playSong(songFile) {
     const player = document.getElementById('audio-player');
-    if(player) {
-        player.src = songFile; 
-        player.play().catch(e => console.log("Audio play failed (interaction needed first):", e));
+    if (!player) return;
+
+    if (currentSong === songFile) {
+        if (player.paused) {
+            player.play();
+        } else {
+            player.pause();
+        }
+        return;
     }
+
+    currentSong = songFile;
+    player.src = songFile;
+    player.play();
 }
 
 function unwrapGift(element) {
